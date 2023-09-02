@@ -4,10 +4,14 @@ const cors = require("cors");
 
 // requiring routers
 const router = require("./src/routes");
+const connectDB = require("./src/config/database");
 
 //setting up our app
 const app = express();
 const port = 4000;
+
+//db setup
+connectDB();
 
 //setting up cors
 app.use(
@@ -16,6 +20,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(express.json());
 
 // create application/json parser
 app.use(express.json());
