@@ -4,6 +4,8 @@ const artistSchema = new mongoose.Schema({
 	ConstituentID: {
 		type: Number,
 		required: true,
+		default : 1
+
 	},
 	DisplayName: {
 		type: String,
@@ -28,15 +30,7 @@ const artistSchema = new mongoose.Schema({
 	EndDate: {
 		type: Number,
 		required: false,
-	},
-	BeginDate: {
-		type: Number,
-		required: false,
-	},
-	BeginDate: {
-		type: Number,
-		required: false,
-	},
+	}
 
 }, {timestamps: true});
 
