@@ -27,13 +27,18 @@ const searchArtist = (req, res) => {
 		})
 }
 
-const addArtist = (req, res) => {
+const addArtist = async (req, res) => {
 	const { displayName, artistBio, nationality, gender, beginDate, endDate = "" } = req.body
 	if (!displayName || !artistBio || !nationality || !gender || !beginDate) {
 		res.status(400).send({ error: "Please fill all the requird fields." })
 	}
 	try {
-		const newArtist = Artist.create({
+		const highestConstituentID = await Artist
+			.findOne({}, {}, { sort: { ConstituentID: -1 } })
+			.select('ConstituentID');
+
+		Artist.create({
+			ConstituentID: highestConstituentID ? highestConstituentID?.ConstituentID + 1 : 1,
 			DisplayName: displayName,
 			ArtistBio: artistBio,
 			Nationality: nationality,
@@ -41,9 +46,15 @@ const addArtist = (req, res) => {
 			BeginDate: beginDate,
 			EndDate: endDate
 		})
+			.then(() => {
+				res.status(200).send({ message: "Artist added successfully." })
+			})
+			.catch((err) => {
+				console.log(err)
+				res.status(408).send({ message: "Something went wrong." })
+			})
 
 		// if anyfilters? insert here.
-		res.status(200).send({ message: "Artist added successfully.", data: newArtist })
 
 	} catch (error) {
 		console.error(error)

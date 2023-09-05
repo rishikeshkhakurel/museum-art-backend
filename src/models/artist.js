@@ -4,8 +4,6 @@ const artistSchema = new mongoose.Schema({
 	ConstituentID: {
 		type: Number,
 		required: true,
-		default : 1
-
 	},
 	DisplayName: {
 		type: String,
@@ -32,7 +30,7 @@ const artistSchema = new mongoose.Schema({
 		required: false,
 	}
 
-}, {timestamps: true});
+}, { timestamps: true });
 
 const Artist = mongoose.model("artists", artistSchema);
 module.exports = Artist;
