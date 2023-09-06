@@ -98,11 +98,14 @@ const deleteArtist = async (req, res) => {
 		res.status(400).send({ error: "Please provide id to the artist." })
 	}
 	try {
-		const deletedArtist = await Artist.findByIdAndDelete(artistId);
-		if (!deletedArtist) {
-			return res.status(404).json({ message: 'Artist not found' });
-		}
-		return res.json({ message: 'Artist deleted successfully' });
+		const deletedArtist = Artist.findByIdAndDelete(artistId)
+			.then(()=>{
+				return res.json({ message: 'Artist deleted successfully' });
+			})
+			.catch((err)=>{
+				return res.status(404).json({ message: 'Artist not found' });
+			})
+		
 	} catch (error) {
 		console.error(error)
 		res.status(408).send({ error: "Something went wrong. Please report to the admin or try again later." })
