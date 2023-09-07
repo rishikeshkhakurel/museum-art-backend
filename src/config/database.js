@@ -5,7 +5,7 @@ const connectDB = async (req, res) => {
   const uri = process.env.DB_URI;
   mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log('connected to db'))
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 }
 
 module.exports = connectDB;

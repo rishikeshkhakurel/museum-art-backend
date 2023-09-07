@@ -7,7 +7,6 @@ const listArtWork = (req, res) => {
     const skipCount = (page - 1) * pageSize;
     ArtWork.find().skip(skipCount).limit(pageSize)
         .then((result) => {
-            console.log(result)
             res.status(200).send(result)
         })
         .catch((error) => {
