@@ -16,5 +16,7 @@ router.get("/artist/:artistId", artist.ArtistbyId);
 //art work
 router.get("/artwork", artWork.listArtWork);
 router.get("/artwork/search", artWork.searchArtWork);
+router.delete("/artwork/:artWorkId", artWork.deleteArtWork);
+router.get("/artwork/:artWorkId", artWork.ArtWorkbyId);
 
 module.exports = router;

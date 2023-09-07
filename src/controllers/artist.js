@@ -98,14 +98,14 @@ const deleteArtist = async (req, res) => {
 		res.status(400).send({ error: "Please provide id to the artist." })
 	}
 	try {
-		const deletedArtist = Artist.findByIdAndDelete(artistId)
-			.then(()=>{
+		Artist.findByIdAndDelete(artistId)
+			.then(() => {
 				return res.json({ message: 'Artist deleted successfully' });
 			})
-			.catch((err)=>{
+			.catch((err) => {
 				return res.status(404).json({ message: 'Artist not found' });
 			})
-		
+
 	} catch (error) {
 		console.error(error)
 		res.status(408).send({ error: "Something went wrong. Please report to the admin or try again later." })
@@ -114,16 +114,18 @@ const deleteArtist = async (req, res) => {
 
 const ArtistbyId = async (req, res) => {
 	const { artistId } = req.params;
-	try {
-		const artist = await Artist.findById(artistId);
-		if (!artist) {
-			return res.status(404).json({ message: 'Artist not found' });
-		}
-		return res.json(artist);
-	} catch (error) {
-		console.error(error)
-		res.status(408).send({ error: "Something went wrong. Please report to the admin or try again later." })
-	}
+	await Artist.findById(artistId)
+		.then((artist) => {
+			if (!artist) {
+				return res.status(404).json({ message: 'Artist not found' });
+			} else {
+				return res.status(200).json(artist);
+			}
+		})
+		.catch((error) => {
+			console.error(error)
+			res.status(408).send({ error: "Something went wrong. Please report to the admin or try again later." })
+		})
 }
 
 module.exports = {
